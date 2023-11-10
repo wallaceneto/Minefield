@@ -1,16 +1,18 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 
 import styles from './style';
-import params from '../../global/params';
+import Field from '../../components/Field/Field';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Iniciando o Mines!</Text>
-      <Text>
-        Tamanho da grade: {params.getRowsAmount()}x{params.getColumnsAmount()}
-      </Text>
+      <Field />
+      <Field opened />
+      <Field opened nearMines={1} />
+      <Field opened nearMines={2} />
+      <Field opened nearMines={4} />
+      <Field opened nearMines={6} />
     </View>
   );
 }
