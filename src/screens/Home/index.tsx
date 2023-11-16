@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 
 import styles from './style';
-import Field from '../../components/Field/Field';
+import Field from '../../components/Field';
 
 export default function HomeScreen() {
   return (
@@ -13,6 +13,8 @@ export default function HomeScreen() {
       <Field mined />
       <Field mined opened />
       <Field mined exploded opened />
+      <Field flagged />
+      <Field flagged opened />
     </View>
   );
 }

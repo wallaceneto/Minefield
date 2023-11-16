@@ -3,15 +3,23 @@ import {Text, View} from 'react-native';
 
 import styles from './styles';
 import Mine from '../Mine';
+import Flag from '../Flag';
 
 type Props = {
   mined?: boolean;
   opened?: boolean;
   nearMines?: number;
   exploded?: boolean;
+  flagged?: boolean;
 };
 
-export default function Field({mined, opened, nearMines, exploded}: Props) {
+export default function Field({
+  mined,
+  opened,
+  nearMines,
+  exploded,
+  flagged,
+}: Props) {
   const styleField: Array<any> = [styles.field];
 
   if (opened) {
@@ -19,6 +27,9 @@ export default function Field({mined, opened, nearMines, exploded}: Props) {
   }
   if (exploded) {
     styleField.push(styles.exploded);
+  }
+  if (flagged) {
+    styleField.push(styles.flaged, styles.regular);
   }
   if (styleField.length === 1) {
     styleField.push(styles.regular);
@@ -48,6 +59,7 @@ export default function Field({mined, opened, nearMines, exploded}: Props) {
         false
       )}
       {mined && opened ? <Mine /> : false}
+      {flagged && !opened ? <Flag /> : false}
     </View>
   );
 }

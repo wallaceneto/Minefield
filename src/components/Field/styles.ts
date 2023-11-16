@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderColor: 'red',
   },
+  flaged: {},
 });
 
 export default styles;
