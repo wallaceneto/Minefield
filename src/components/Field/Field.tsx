@@ -2,17 +2,23 @@ import React from 'react';
 import {Text, View} from 'react-native';
 
 import styles from './styles';
+import Mine from '../Mine';
 
 type Props = {
   mined?: boolean;
   opened?: boolean;
   nearMines?: number;
+  exploded?: boolean;
 };
 
-export default function Field({mined, opened, nearMines}: Props) {
+export default function Field({mined, opened, nearMines, exploded}: Props) {
   const styleField: Array<any> = [styles.field];
+
   if (opened) {
     styleField.push(styles.opened);
+  }
+  if (exploded) {
+    styleField.push(styles.exploded);
   }
   if (styleField.length === 1) {
     styleField.push(styles.regular);
@@ -41,6 +47,7 @@ export default function Field({mined, opened, nearMines}: Props) {
       ) : (
         false
       )}
+      {mined && opened ? <Mine /> : false}
     </View>
   );
 }
