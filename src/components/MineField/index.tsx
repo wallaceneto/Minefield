@@ -9,7 +9,12 @@ export default function MineField(props: any) {
   const rows = props.board.map((row: any, r: number) => {
     const columns = row.map((field: any, c: number) => {
       return (
-        <Field {...field} key={c} onOpen={() => props.onOpenField(r, c)} />
+        <Field
+          {...field}
+          key={c}
+          onOpen={() => props.onOpenField(r, c)}
+          onSelect={() => props.onSelectField(r, c)}
+        />
       );
     });
     return (

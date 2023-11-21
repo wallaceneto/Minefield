@@ -117,6 +117,11 @@ const showMines = (board: boardType[][]) =>
     .filter(field => field.mined)
     .forEach(field => (field.opened = true));
 
+const invertFlag = (board: boardType[][], row: number, column: number) => {
+  const field = board[row][column];
+  field.flagged = !field.flagged;
+};
+
 export {
   createMineBoard,
   cloneBoard,
@@ -124,4 +129,5 @@ export {
   hadExplosion,
   wonGame,
   showMines,
+  invertFlag,
 };

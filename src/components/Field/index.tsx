@@ -12,41 +12,35 @@ type Props = {
   exploded?: boolean;
   flagged?: boolean;
   onOpen?: () => void;
+  onSelect?: () => void;
 };
 
-export default function Field({
-  mined,
-  opened,
-  nearMines,
-  exploded,
-  flagged,
-  onOpen,
-}: Props) {
+export default function Field(props: Props) {
   const styleField: Array<any> = [styles.field];
 
-  if (opened) {
+  if (props.opened) {
     styleField.push(styles.opened);
   }
-  if (exploded) {
+  if (props.exploded) {
     styleField.push(styles.exploded);
   }
-  if (flagged) {
+  if (props.flagged) {
     styleField.push(styles.flaged, styles.regular);
   }
   if (styleField.length === 1) {
     styleField.push(styles.regular);
   }
 
-  if (!nearMines) {
-    nearMines = 0;
+  if (!props.nearMines) {
+    props.nearMines = 0;
   }
   let color;
-  if (nearMines > 0) {
-    if (nearMines === 1) {
+  if (props.nearMines > 0) {
+    if (props.nearMines === 1) {
       color = '#2A28D7';
-    } else if (nearMines === 2) {
+    } else if (props.nearMines === 2) {
       color = '#2B520F';
-    } else if (nearMines > 2 && nearMines < 6) {
+    } else if (props.nearMines > 2 && props.nearMines < 6) {
       color = '#F9060A';
     } else {
       color = '#F221A9';
@@ -54,15 +48,17 @@ export default function Field({
   }
 
   return (
-    <TouchableWithoutFeedback onPress={onOpen}>
+    <TouchableWithoutFeedback
+      onPress={props.onOpen}
+      onLongPress={props.onSelect}>
       <View style={styleField}>
-        {!mined && opened && nearMines > 0 ? (
-          <Text style={[styles.label, {color: color}]}>{nearMines}</Text>
+        {!props.mined && props.opened && props.nearMines > 0 ? (
+          <Text style={[styles.label, {color: color}]}>{props.nearMines}</Text>
         ) : (
           false
         )}
-        {mined && opened ? <Mine /> : false}
-        {flagged && !opened ? <Flag /> : false}
+        {props.mined && props.opened ? <Mine /> : false}
+        {props.flagged && !props.opened ? <Flag /> : false}
       </View>
     </TouchableWithoutFeedback>
   );
