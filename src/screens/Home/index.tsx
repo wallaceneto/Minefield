@@ -15,11 +15,16 @@ import {
   invertFlag,
   flagsUsed,
 } from '../../global/functions';
+import {LevelSelection} from '../Modals';
 
-export default class HomeScreen extends Component<
-  {},
-  {board: any; won: boolean; lost: boolean}
-> {
+type homeProps = {
+  board: any;
+  won: boolean;
+  lost: boolean;
+  showLevelSelection: boolean;
+};
+
+export default class HomeScreen extends Component<{}, homeProps> {
   constructor(props: any) {
     super(props);
     this.state = this.createState();
@@ -38,6 +43,7 @@ export default class HomeScreen extends Component<
       board: createMineBoard(rows, cols, this.minesAmount()),
       won: false,
       lost: false,
+      showLevelSelection: false,
     };
   };
 
@@ -71,12 +77,23 @@ export default class HomeScreen extends Component<
     this.setState({board, won});
   };
 
+  onLevelSelected = (level: number) => {
+    params.dificultLevel = level;
+    this.setState(this.createState());
+  };
+
   render() {
     return (
       <View style={styles.container}>
+        <LevelSelection
+          isVisible={this.state.showLevelSelection}
+          onCancel={() => this.setState({showLevelSelection: false})}
+          onLevelSelected={this.onLevelSelected}
+        />
         <Header
           flagsLeft={this.minesAmount() - flagsUsed(this.state.board)}
           onNewGame={() => this.setState(this.createState())}
+          onFlagPress={() => this.setState({showLevelSelection: true})}
         />
         <MineField
           board={this.state.board}

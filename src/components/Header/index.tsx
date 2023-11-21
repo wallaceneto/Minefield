@@ -7,13 +7,14 @@ import Flag from '../Flag';
 type Props = {
   flagsLeft: number;
   onNewGame: () => void;
+  onFlagPress: () => void;
 };
 
-export default function Header({flagsLeft, onNewGame}: Props) {
+export default function Header({flagsLeft, onNewGame, onFlagPress}: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.flagContainer}>
-        <TouchableOpacity style={styles.flagButton} onPress={() => {}}>
+        <TouchableOpacity style={styles.flagButton} onPress={onFlagPress}>
           <Flag bigger />
         </TouchableOpacity>
         <Text style={styles.flagsLeft}>= {flagsLeft}</Text>
