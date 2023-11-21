@@ -1,3 +1,5 @@
+import {boardType} from './types';
+
 const createBoard = (rows: number, columns: number) => {
   return Array(rows)
     .fill(0)
@@ -18,7 +20,7 @@ const createBoard = (rows: number, columns: number) => {
     });
 };
 
-const spreadMines = (board: any, minesAmount: number) => {
+const spreadMines = (board: boardType[][], minesAmount: number) => {
   const rows = board.length;
   const columns = board[0].length;
   let minesPlanted = 0;
@@ -44,7 +46,7 @@ const createMineBoard = (
   return board;
 };
 
-const cloneBoard = (board: any) => {
+const cloneBoard = (board: boardType[][]) => {
   return board.map((rows: any[]) => {
     return rows.map(field => {
       return {...field};
@@ -52,7 +54,7 @@ const cloneBoard = (board: any) => {
   });
 };
 
-const getNeighbors = (board: any, row: number, column: number) => {
+const getNeighbors = (board: boardType[][], row: number, column: number) => {
   const neighbors: any[] = [];
   const rows = [row - 1, row, row + 1];
   const columns = [column - 1, column, column + 1];
@@ -70,13 +72,17 @@ const getNeighbors = (board: any, row: number, column: number) => {
   return neighbors;
 };
 
-const safeNeighborhood = (board: any, row: number, column: number) => {
+const safeNeighborhood = (
+  board: boardType[][],
+  row: number,
+  column: number,
+) => {
   const safes = (result: any, neighbor: {mined: any}) =>
     result && !neighbor.mined;
   return getNeighbors(board, row, column).reduce(safes, true);
 };
 
-const openField = (board: any, row: number, column: number) => {
+const openField = (board: boardType[][], row: number, column: number) => {
   const field = board[row][column];
   if (!field.opened) {
     field.opened = true;
@@ -93,13 +99,19 @@ const openField = (board: any, row: number, column: number) => {
   }
 };
 
-const fields = (board: any) => [].concat(...board);
-const hadExplosion = (board: any) =>
+const fields = (board: boardType[][]) =>
+  ([] as boardType[]).concat.apply([], board);
+
+const hadExplosion = (board: boardType[][]) =>
   fields(board).filter(field => field.exploded).length > 0;
+
 const pendding = (field: any) =>
   (field.mined && !field.flagged) || (!field.mined && !field.opened);
-const wonGame = (board: any) => fields(board).filter(pendding).length === 0;
-const showMines = (board: any) =>
+
+const wonGame = (board: boardType[][]) =>
+  fields(board).filter(pendding).length === 0;
+
+const showMines = (board: boardType[][]) =>
   fields(board)
     .filter(field => field.mined)
     .forEach(field => (field.opened = true));
