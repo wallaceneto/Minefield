@@ -1,10 +1,10 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Alert} from 'react-native';
 
 import styles from './style';
 import params from '../../global/params';
 import MineField from '../../components/MineField';
+import Header from '../../components/Header';
 import {
   createMineBoard,
   cloneBoard,
@@ -13,6 +13,7 @@ import {
   wonGame,
   showMines,
   invertFlag,
+  flagsUsed,
 } from '../../global/functions';
 
 export default class HomeScreen extends Component<
@@ -73,9 +74,10 @@ export default class HomeScreen extends Component<
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{color: 'black'}}>
-          Tamanho da grade: {params.getRowsAmount()}x{params.getColumnsAmount()}
-        </Text>
+        <Header
+          flagsLeft={this.minesAmount() - flagsUsed(this.state.board)}
+          onNewGame={() => this.setState(this.createState())}
+        />
         <MineField
           board={this.state.board}
           onOpenField={this.onOpenField}

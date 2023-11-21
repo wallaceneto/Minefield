@@ -122,6 +122,9 @@ const invertFlag = (board: boardType[][], row: number, column: number) => {
   field.flagged = !field.flagged;
 };
 
+const flagsUsed = (board: boardType[][]) =>
+  fields(board).filter(field => field.flagged).length;
+
 export {
   createMineBoard,
   cloneBoard,
@@ -130,4 +133,5 @@ export {
   wonGame,
   showMines,
   invertFlag,
+  flagsUsed,
 };
