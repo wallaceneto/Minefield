@@ -8,7 +8,9 @@ import Field from '../Field';
 export default function MineField(props: any) {
   const rows = props.board.map((row: any, r: number) => {
     const columns = row.map((field: any, c: number) => {
-      return <Field {...field} key={c} />;
+      return (
+        <Field {...field} key={c} onOpen={() => props.onOpenField(r, c)} />
+      );
     });
     return (
       <View key={r} style={{flexDirection: 'row'}}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, TouchableWithoutFeedback, View} from 'react-native';
 
 import styles from './styles';
 import Mine from '../Mine';
@@ -11,6 +11,7 @@ type Props = {
   nearMines?: number;
   exploded?: boolean;
   flagged?: boolean;
+  onOpen?: () => void;
 };
 
 export default function Field({
@@ -19,6 +20,7 @@ export default function Field({
   nearMines,
   exploded,
   flagged,
+  onOpen,
 }: Props) {
   const styleField: Array<any> = [styles.field];
 
@@ -52,14 +54,16 @@ export default function Field({
   }
 
   return (
-    <View style={styleField}>
-      {!mined && opened && nearMines > 0 ? (
-        <Text style={[styles.label, {color: color}]}>{nearMines}</Text>
-      ) : (
-        false
-      )}
-      {mined && opened ? <Mine /> : false}
-      {flagged && !opened ? <Flag /> : false}
-    </View>
+    <TouchableWithoutFeedback onPress={onOpen}>
+      <View style={styleField}>
+        {!mined && opened && nearMines > 0 ? (
+          <Text style={[styles.label, {color: color}]}>{nearMines}</Text>
+        ) : (
+          false
+        )}
+        {mined && opened ? <Mine /> : false}
+        {flagged && !opened ? <Flag /> : false}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

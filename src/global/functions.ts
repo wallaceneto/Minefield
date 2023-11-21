@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import {boardType} from './types';
 
 const createBoard = (rows: number, columns: number) => {
